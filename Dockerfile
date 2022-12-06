@@ -1,4 +1,4 @@
-FROM node:16.18.1-alpine3.15
+FROM node:16.18-alpine3.15
 
 RUN npm install -g firebase-tools
 
