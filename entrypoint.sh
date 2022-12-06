@@ -11,7 +11,10 @@ if [ -z "${TARGET}" ]; then
 fi
 
 if [ -z "${WORKING_DIRECTORY}" ]; then
-    echo "WORKING_DIRECTORY is missing"
+    echo "WORKING_DIRECTORY is missing use default functions directory"
+
+    WORKING_DIRECTORY = "functions"
+    cd ${WORKING_DIRECTORY}
 else
     cd ${WORKING_DIRECTORY}
 fi
@@ -23,14 +26,4 @@ fi
 
 firebase use ${TARGET}
 
-npm run front:build:production
-
-cd backend 
-npm run backend:build
-
-if [ -z "${DEPLOY_FUNCTION_AND_HOSTING}" ]; then
-    firebase deploy --token ${FIREBASE_TOKEN}
-else
-    firebase deploy --token ${FIREBASE_TOKEN} --only ${DEPLOY_ONLY}
-fi
-
+firebase deploy --token ${FIREBASE_TOKEN} --only ${DEPLOY_ONLY}

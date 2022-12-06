@@ -1,9 +1,11 @@
 name: "Firebase CI Ops"
 author: "Jean-baptiste Thery<jb.thery@flameapp.studio>"
-description: "Deploy Firebase Hosting and Function with environments for better continuous integration"
+description: "Deploy Firebase functions with environments for better continuous integration"
+
 runs:
   using: "docker"
   image: "Dockerfile"
+
 branding:
   icon: "database"
   color: "white"

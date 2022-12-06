@@ -1,6 +1,6 @@
 # Deploy to Firebase Functions With Project Targets!
 
-A GitHub Action to deploy to Firebase Functions that is able to deploy to different projects. Need to deploy to production on one branch, then to development on another? Specify a 'target' by using the <key, value> set in your `firebaserc` file. For example:
+Deploy Firebase functions with environments for better continuous integration. Need to deploy to production on one branch, then to development on another? Specify a 'target' by using the <key, value> set in your `firebaserc` file. For example:
 
 ```
 {
@@ -34,4 +34,5 @@ jobs:
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         TARGET: default or production or staging or your custom env name
+        WORKING_DIRECTORY: functions
 ```

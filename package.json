@@ -1,0 +1,33 @@
+{
+  "name": "firebase-ci-ops",
+  "description": "Deploy Firebase functions with environments for better continuous integration",
+  "license": "MIT",
+  "author": {
+    "name": "Thery Jean-Baptiste",
+    "email": "jb.thery@flameapp.fr",
+    "url": "https://flameapp.studio"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flame-app-studio/firebase-ci-ops.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flame-app-studio/firebase-ci-ops/issues"
+  },
+  "homepage": "https://github.com/flame-app-studio/firebase-ci-ops#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "husky": "^8.0.2"
+  }
+}
