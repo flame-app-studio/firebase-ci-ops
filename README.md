@@ -103,7 +103,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v1.1.0
+        uses: flame-app-studio/firebase-ci-ops@[current-version]
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: production
@@ -143,7 +143,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v1.1.0
+        uses: flame-app-studio/firebase-ci-ops@[current-version]
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: staging
