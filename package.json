@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": {
     "name": "Thery Jean-Baptiste",
-    "email": "jb.thery@flameapp.fr",
+    "email": "jb.thery@flameapp.studio",
     "url": "https://flameapp.studio"
   },
   "release": {
@@ -26,8 +26,6 @@
   },
   "homepage": "https://github.com/flame-app-studio/firebase-ci-ops#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
     "husky": "^8.0.2"
   }
 }
