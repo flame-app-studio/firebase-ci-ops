@@ -1,5 +1,6 @@
 {
   "name": "firebase-ci-ops",
+  "private": true,
   "description": "Deploy Firebase functions with environments for better continuous integration",
   "license": "MIT",
   "author": {
