@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/flame-app-studio/firebase-ci-ops#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "husky": "^8.0.2"
   }
 }

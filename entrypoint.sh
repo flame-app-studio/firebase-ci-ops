@@ -1,29 +1,40 @@
 #!/bin/sh
 
-if [ -z "${FIREBASE_TOKEN}" ]; then
-    echo "FIREBASE_TOKEN is missing"
+if [ -z "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+    echo "GOOGLE_APPLICATION_CREDENTIALS is missing"
     exit 1
 fi
 
 if [ -z "${TARGET}" ]; then
     echo "TARGET is missing"
+
     TARGET = "default"
-fi
-
-if [ -z "${WORKING_DIRECTORY}" ]; then
-    echo "WORKING_DIRECTORY is missing use default functions directory"
-
-    WORKING_DIRECTORY = "functions"
-    cd ${WORKING_DIRECTORY}
-else
-    cd ${WORKING_DIRECTORY}
-fi
-
-if [ -z "${DEPLOY_ONLY}" ]; then
-    echo "DEPLOY_ONLY is missing"
-    DEPLOY_ONLY = "functions"
 fi
 
 firebase use ${TARGET}
 
-firebase deploy --token ${FIREBASE_TOKEN} --only ${DEPLOY_ONLY}
+firebase deploy --token ${GOOGLE_APPLICATION_CREDENTIALS} --only functions
+
+if [ -z "${DEPLOY_DATABASE}" ]; then
+    echo "DEPLOY_DATABASE is missing, skip database rules deploy"
+else 
+    firebase deploy --token ${GOOGLE_APPLICATION_CREDENTIALS} --only database
+fi
+
+if [ -z "${DEPLOY_STORAGE}" ]; then
+    echo "DEPLOY_STORAGE is missing, skip database storage rules deploy"
+else 
+    firebase deploy --token ${GOOGLE_APPLICATION_CREDENTIALS} --only storage
+fi
+
+if [ -z "${DEPLOY_FIRESTORE_RULES}" ]; then
+    echo "DEPLOY_FIRESTORE_RULES is missing, skip database rules deploy"
+else 
+    firebase deploy --token ${GOOGLE_APPLICATION_CREDENTIALS} --only firestore:rules
+fi
+
+if [ -z "${DEPLOY_FIRESTORE_INDEX}" ]; then
+    echo "DEPLOY_FIRESTORE_INDEX is missing, skip database indexes deploy"
+else 
+    firebase deploy --token ${GOOGLE_APPLICATION_CREDENTIALS} --only firestore:indexes
+fi
