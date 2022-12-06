@@ -12,37 +12,11 @@ Deploy Firebase functions with environments for better continuous integration. N
 }
 ```
 
-## Instructions
-
----
-
-1. Login to firebase ci in your terminal
-
-```
-firebase login:ci
-```
-
-2. Get your FIREBASE_TOKEN from your terminal
-
-example copy the prompt like :
-
-```
-1//XXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXX
-```
-
-3. Create a FIREBASE_TOKEN entry in your Github repos secrets with your token as value
-
-4. Follow the [Github](https://docs.github.com/actions) doc to add the workflow to your repos actions
+This action use [https://github.com/marketplace/actions/authenticate-to-google-cloud](https://github.com/marketplace/actions/authenticate-to-google-cloud) for Google services authentication
 
 ## Arguments
 
 ---
-
-Prompted token from command **_firebase login:ci_**
-
-```
-FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-```
 
 Firebase env name, see [https://firebase.google.com/docs/projects/dev-workflows/overview-environments](https://firebase.google.com/docs/projects/dev-workflows/overview-environments)
 
@@ -74,7 +48,13 @@ Add this if you want to deploy database rules
 DEPLOY_FIRESTORE_INDEX: true
 ```
 
-## Example production workflow
+## Instructions
+
+1. Get your Firebase service account json from firebase admin for each of your project env
+
+2. Create a GOOGLE_CREDENTIALS_STAGING and GOOGLE_CREDENTIALS_PRODUCTION in you Github repo secret, add your firebase credentials. If you don't have multiples firebase env create GOOGLE_CREDENTIALS secret only and past corresponding Firebase service account json.
+
+### Example production workflow
 
 ---
 
@@ -102,18 +82,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS_STAGING_PRODUCTION }}"
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@[current-version]
+        uses: flame-app-studio/firebase-ci-ops@v1.3.0
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: production
-          WORKING_DIRECTORY: functions
           DEPLOY_STORAGE: true
           DEPLOY_FIRESTORE_RULES: true
           DEPLOY_FIRESTORE_INDEX: true
 ```
 
-## Example staging workflow
+### Example staging workflow
 
 ---
 
@@ -142,12 +125,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS_STAGING }}"
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@[current-version]
+        uses: flame-app-studio/firebase-ci-ops@v1.3.0
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: staging
-          WORKING_DIRECTORY: functions
           DEPLOY_STORAGE: true
           DEPLOY_FIRESTORE_RULES: true
           DEPLOY_FIRESTORE_INDEX: true
