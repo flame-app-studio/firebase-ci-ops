@@ -24,6 +24,8 @@ npm i
 
 npm run ${BUILD_COMMAND}
 
+cd ..
+
 firebase use ${TARGET}
 
 firebase deploy --only functions
