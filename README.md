@@ -20,16 +20,6 @@ This action use [https://github.com/marketplace/actions/authenticate-to-google-c
 
 Function Directory in your project
 
-```
-FUNCTIONS_DIRECTORY: 'functions' or your custom function directory
-```
-
-Npm build command
-
-```
-BUILD_COMMAND: 'build' or your custom build command
-```
-
 Firebase env name, see [https://firebase.google.com/docs/projects/dev-workflows/overview-environments](https://firebase.google.com/docs/projects/dev-workflows/overview-environments)
 
 ```
@@ -84,8 +74,6 @@ jobs:
         uses: flame-app-studio/firebase-ci-ops@v1.4.0
         env:
           TARGET: [your firebase target]
-          BUILD_COMMAND: [your npm build command]
-          FUNCTIONS_DIRECTORY: [function directory in your project]
 ```
 
 ### Example staging workflow
@@ -127,8 +115,6 @@ jobs:
         uses: flame-app-studio/firebase-ci-ops@v1.4.0
         env:
           TARGET: [your firebase target]
-          BUILD_COMMAND: [your npm build command]
-          FUNCTIONS_DIRECTORY: [function directory in your project]
 
 ```
 
