@@ -84,6 +84,8 @@ jobs:
         uses: flame-app-studio/firebase-ci-ops@v1.4.0
         env:
           TARGET: [your firebase target]
+          BUILD_COMMAND: [your npm build command]
+          FUNCTIONS_DIRECTORY: [function directory in your project]
 ```
 
 ### Example staging workflow
@@ -125,6 +127,8 @@ jobs:
         uses: flame-app-studio/firebase-ci-ops@v1.4.0
         env:
           TARGET: [your firebase target]
+          BUILD_COMMAND: [your npm build command]
+          FUNCTIONS_DIRECTORY: [function directory in your project]
 
 ```
 

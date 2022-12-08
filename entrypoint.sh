@@ -20,6 +20,8 @@ fi
 
 cd ${FUNCTIONS_DIRECTORY}
 
+npm i
+
 npm run ${BUILD_COMMAND}
 
 firebase use ${TARGET}
