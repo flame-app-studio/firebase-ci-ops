@@ -24,35 +24,13 @@ Firebase env name, see [https://firebase.google.com/docs/projects/dev-workflows/
 TARGET: 'default' or your env name
 ```
 
-Add this if you want to deploy storage rules
-
-```
-DEPLOY_STORAGE: true
-```
-
-Add this if you want to deploy firestore rules
-
-```
-DEPLOY_FIRESTORE_RULES: true
-```
-
-Add this if you want to deploy firestore index rules
-
-```
-DEPLOY_FIRESTORE_INDEX: true
-```
-
-Add this if you want to deploy database rules
-
-```
-DEPLOY_FIRESTORE_INDEX: true
-```
-
 ## Instructions
 
 1. Get your Firebase service account json from firebase admin for each of your project env
 
-2. Create a GOOGLE_CREDENTIALS_STAGING and GOOGLE_CREDENTIALS_PRODUCTION in you Github repo secret, add your firebase credentials. If you don't have multiples firebase env create GOOGLE_CREDENTIALS secret only and past corresponding Firebase service account json.
+2. Create a FIREBASE_SERVICE_ACCOUNT_STAGING and FIREBASE_SERVICE_ACCOUNT_PRODUCTION in your Github repo secret, add your firebase credentials. If you don't have multiples firebase env create FIREBASE_SERVICE_ACCOUNT secret only and past corresponding Firebase service account json.
+
+3. (Info) If you want to deploy only your other firebase service (firestore rules, storage rules), you have to do this manually. See [https://firebase.google.com/docs/cli](https://firebase.google.com/docs/cli)
 
 ### Example production workflow
 
@@ -61,22 +39,25 @@ DEPLOY_FIRESTORE_INDEX: true
 ```
 name: Deploy production
 
-"on":
-  release:
-    types: [published]
+on:
+  workflow_run:
+    workflows: [Semantic Release]
+    types:
+      - completed
 
 jobs:
   deploy_hosting:
     runs-on: ubuntu-latest
+    environment: [your github secret environnement]
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci && npm run build
+      - run: npm ci && npm run [your front build command]
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          channelId: live
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRODUCTION }}"
-          channelId: live
-          projectId: your-project-id
+          projectId: [your project id]
 
   deploy_functions:
     runs-on: ubuntu-latest
@@ -86,14 +67,11 @@ jobs:
         name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v1"
         with:
-          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS_STAGING_PRODUCTION }}"
+          credentials_json: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRODUCTION }}"
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v1.3.0
+        uses: flame-app-studio/firebase-ci-ops@v1.4.0
         env:
-          TARGET: production
-          DEPLOY_STORAGE: true
-          DEPLOY_FIRESTORE_RULES: true
-          DEPLOY_FIRESTORE_INDEX: true
+          TARGET: [your firebase target]
 ```
 
 ### Example staging workflow
@@ -111,15 +89,16 @@ name: Deploy staging
 jobs:
   deploy_hosting:
     runs-on: ubuntu-latest
+    environment: [your github secret environnement]
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci && npm run build
+      - run: npm ci && npm run [your front build command]
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          channelId: live
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}"
-          channelId: live
-          projectId: your-project-id
+          projectId: [your project id]
 
   deploy_functions:
     runs-on: ubuntu-latest
@@ -129,14 +108,12 @@ jobs:
         name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v1"
         with:
-          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS_STAGING }}"
+          credentials_json: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}"
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v1.3.0
+        uses: flame-app-studio/firebase-ci-ops@v1.4.0
         env:
-          TARGET: staging
-          DEPLOY_STORAGE: true
-          DEPLOY_FIRESTORE_RULES: true
-          DEPLOY_FIRESTORE_INDEX: true
+          TARGET: [your firebase target]
+
 ```
 
 <br/><br/>
