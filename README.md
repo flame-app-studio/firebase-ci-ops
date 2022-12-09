@@ -48,7 +48,7 @@ If true deploy Firebase firestore rules
 DEPLOY_FIRESTORE_RULES: true or false
 ```
 
-### Example production workflow
+### Example workflow
 
 ---
 
@@ -87,47 +87,6 @@ jobs:
           DEPLOY_DATABASE: [true or false]
           DEPLOY_STORAGE: [true or false]
           DEPLOY_FIRESTORE_RULES: [true or false]
-```
-
-### Example staging workflow
-
----
-
-```
-name: Deploy staging
-
-"on":
-  push:
-    branches:
-      - develop
-
-jobs:
-  deploy_hosting:
-    runs-on: ubuntu-latest
-    environment: [your github secret environnement]
-    steps:
-      - uses: actions/checkout@v3
-      - run: npm ci && npm run [your front build command]
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          channelId: live
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}"
-          projectId: [your project id]
-
-  deploy_functions:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3"
-      - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v[current version]
-        env:
-          FIREBASE_CI_TOKEN: [your firebase ci token]  ***! required***
-          TARGET: [your firebase target]
-          DEPLOY_DATABASE: [true or false]
-          DEPLOY_STORAGE: [true or false]
-          DEPLOY_FIRESTORE_RULES: [true or false]
-
 ```
 
 <br/><br/>
