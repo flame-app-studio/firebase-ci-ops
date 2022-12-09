@@ -1,6 +1,6 @@
 # Deploy Firebase function with environnement target
 
-Deploy Firebase functions with environments for better continuous integration. Need to deploy to production on one branch, then to development on another? Specify a 'target' by using the <key, value> set in your `firebaserc` file. For example:
+Deploy Firebase functions and optionally other service (Firestore rules, Storage, Database) with environments for better continuous integration. Need to deploy to production on one branch, then to development on another? Specify a 'target' by using the <key, value> set in your `firebaserc` file. For example:
 
 ```
 {
@@ -18,7 +18,11 @@ This action use [https://github.com/marketplace/actions/authenticate-to-google-c
 
 ---
 
-Function Directory in your project
+Your Firebase ci token, to get this see [https://firebase.google.com/docs/cli](https://firebase.google.com/docs/cli)
+
+```
+FIREBASE_CI_TOKEN
+```
 
 Firebase env name, see [https://firebase.google.com/docs/projects/dev-workflows/overview-environments](https://firebase.google.com/docs/projects/dev-workflows/overview-environments)
 
@@ -26,13 +30,23 @@ Firebase env name, see [https://firebase.google.com/docs/projects/dev-workflows/
 TARGET: 'default' or your env name
 ```
 
-## Instructions
+If true deploy Firebase database rules
 
-1. Get your Firebase service account json from firebase admin for each of your project env
+```
+DEPLOY_DATABASE: true or false
+```
 
-2. Create a FIREBASE_SERVICE_ACCOUNT_STAGING and FIREBASE_SERVICE_ACCOUNT_PRODUCTION in your Github repo secret, add your firebase credentials. If you don't have multiples firebase env create FIREBASE_SERVICE_ACCOUNT secret only and past corresponding Firebase service account json.
+If true deploy Firebase storage rules
 
-3. (Info) If you want to deploy only your other firebase service (firestore rules, storage rules), you have to do this manually. See [https://firebase.google.com/docs/cli](https://firebase.google.com/docs/cli)
+```
+DEPLOY_STORAGE: true or false
+```
+
+If true deploy Firebase firestore rules
+
+```
+DEPLOY_FIRESTORE_RULES: true or false
+```
 
 ### Example production workflow
 
@@ -65,15 +79,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - id: "auth"
-        name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRODUCTION }}"
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v1.4.0
+        uses: flame-app-studio/firebase-ci-ops@[current version]
         env:
+          FIREBASE_CI_TOKEN: [your firebase ci token]  ***! required***
           TARGET: [your firebase target]
+          DEPLOY_DATABASE: [true or false]
+          DEPLOY_STORAGE: [true or false]
+          DEPLOY_FIRESTORE_RULES: [true or false]
 ```
 
 ### Example staging workflow
@@ -105,16 +118,15 @@ jobs:
   deploy_functions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - id: "auth"
-        name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}"
+      - uses: actions/checkout@v3"
       - name: Firebase CI Ops
-        uses: flame-app-studio/firebase-ci-ops@v1.4.0
+        uses: flame-app-studio/firebase-ci-ops@v[current version]
         env:
+          FIREBASE_CI_TOKEN: [your firebase ci token]  ***! required***
           TARGET: [your firebase target]
+          DEPLOY_DATABASE: [true or false]
+          DEPLOY_STORAGE: [true or false]
+          DEPLOY_FIRESTORE_RULES: [true or false]
 
 ```
 
