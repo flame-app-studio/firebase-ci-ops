@@ -14,14 +14,6 @@ firebase use ${TARGET} --token ${FIREBASE_CI_TOKEN}
 
 firebase deploy --token ${FIREBASE_CI_TOKEN} --only functions
 
-if [ -z "${DEPLOY_DATABASE}" ]; then
-    echo "DEPLOY_DATABASE is missing, skip database rules deploy"
-
-    DEPLOY_DATABASE = "null"
-else 
-    firebase deploy --token ${FIREBASE_CI_TOKEN} --only database
-fi
-
 if [ -z "${DEPLOY_STORAGE}" ]; then
     echo "DEPLOY_STORAGE is missing, skip database storage rules deploy"
 

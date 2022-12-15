@@ -36,12 +36,6 @@ If true deploy Firebase database rules
 DEPLOY_DATABASE: true or false
 ```
 
-If true deploy Firebase storage rules
-
-```
-DEPLOY_STORAGE: true or false
-```
-
 If true deploy Firebase firestore rules
 
 ```
