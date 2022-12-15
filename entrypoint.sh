@@ -23,9 +23,7 @@ cd ${FUNCTION_DIRECTORY}
 if [ -z "${NPM_ACCESS_TOKEN}" ]; then
     echo "NPM_ACCESS_TOKEN is missing, skip .npmrc creation"
 else 
-    cat .npmrc
-
-    echo "//registry.npmjs.org/:_authToken=${secrets.NPM_ACCESS_TOKEN}" >> .npmrc
+    echo "//registry.npmjs.org/:_authToken=${NPM_ACCESS_TOKEN}" >> .npmrc
 fi
 
 npm ci
