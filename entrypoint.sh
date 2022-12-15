@@ -21,6 +21,8 @@ fi
 cd ${FUNCTION_DIRECTORY} 
 
 if [ -z "${NPM_ACCESS_TOKEN}" ]; then
+    echo "NPM_ACCESS_TOKEN is missing, skip .npmrc creation"
+else 
     echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > ~/.npmrc
 fi
 
@@ -31,7 +33,7 @@ firebase use ${TARGET} --token ${FIREBASE_CI_TOKEN}
 firebase deploy --token ${FIREBASE_CI_TOKEN} --only functions
 
 if [ -z "${DEPLOY_STORAGE}" ]; then
-    echo "DEPLOY_STORAGE is missing, skip database storage rules deploy"
+    echo "DEPLOY_STORAGE is missing, skip database storage rules deploy"  
 else 
     firebase deploy --token ${FIREBASE_CI_TOKEN} --only storage
 fi
