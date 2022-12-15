@@ -30,12 +30,6 @@ Firebase env name, see [https://firebase.google.com/docs/projects/dev-workflows/
 TARGET: 'default' or your env name
 ```
 
-If true deploy Firebase database rules
-
-```
-DEPLOY_DATABASE: true or false
-```
-
 If true deploy Firebase firestore rules
 
 ```

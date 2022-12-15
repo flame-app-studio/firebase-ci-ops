@@ -43,9 +43,3 @@ if [ -z "${DEPLOY_FIRESTORE_RULES}" ]; then
 else 
     firebase deploy --token ${FIREBASE_CI_TOKEN} --only firestore
 fi
-
-if [ -z "${DEPLOY_DATABASE}" ]; then
-    echo "DEPLOY_DATABASE is missing, skip fire store rules deploy"
-else 
-    firebase deploy --token ${FIREBASE_CI_TOKEN} --only database
-fi
