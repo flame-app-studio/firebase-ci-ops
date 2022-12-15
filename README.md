@@ -42,6 +42,18 @@ If true deploy Firebase firestore rules
 DEPLOY_FIRESTORE_RULES: true or false
 ```
 
+If true write .npmrc file with npm token
+
+```
+NPM_ACCESS_TOKEN: string
+```
+
+Custom function directory
+
+```
+FUNCTION_DIRECTORY: string
+```
+
 ### Example workflow
 
 ---
